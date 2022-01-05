@@ -50,23 +50,35 @@ class App extends React.Component {
         id: 13,
       },
     ],
+    searchText: "",
   };
 
   deleteMovie = (movie) => {
     const newMovieList = this.state.movies.filter((m) => m.id !== movie.id);
 
-    this.setState({ movies: newMovieList });
+    this.setState((state) => ({ movies: newMovieList }));
+  };
+
+  searchMovie = (event) => {
+    this.setState({ searchText: event.target.value });
   };
 
   render() {
+    let filteredMovies = this.state.movies.filter((movie) => {
+      return (
+        movie.name
+          .toLowerCase()
+          .indexOf(this.state.searchText.toLowerCase()) !== -1
+      );
+    });
     return (
-      <div className='container'>
+      <div className='container mt-4'>
         <div className='row'>
           <div className='col-lg-12'>
-            <SearchBar />
+            <SearchBar search={this.searchMovie} />
           </div>
         </div>
-        <MovieList movies={this.state.movies} delete={this.deleteMovie} />
+        <MovieList movies={filteredMovies} delete={this.deleteMovie} />
       </div>
     );
   }

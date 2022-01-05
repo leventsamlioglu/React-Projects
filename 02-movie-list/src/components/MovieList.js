@@ -2,12 +2,12 @@ import React from "react";
 
 function MovieList(props) {
   return (
-    <div className='row row-cols-3 row-cols-lg-3 g-4'>
+    <div className='row row-cols-3'>
       {props.movies.map((movie) => (
-        <div className='card lg-4 shadow-sm' key={movie.id}>
+        <div className='card shadow-sm' key={movie.id}>
           <img
             src={movie.imageURL}
-            className='card-img-top'
+            className='card-img-top mt-3'
             alt='sample movie'
           />
           <div className='card-body'>
