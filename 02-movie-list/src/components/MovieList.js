@@ -7,12 +7,12 @@ function MovieList(props) {
         <div className='col-lg-4' key={movie.id}>
           <div className='card mb-4 shadow-sm'>
             <img
-              src={movie.imageURL}
+              src={`https://www.themoviedb.org/t/p/w1280/${movie.poster_path}`}
               className='card-img-top'
               alt='sample movie'
             />
             <div className='card-body'>
-              <h5 className='card-title'>{movie.name}</h5>
+              <h5 className='card-title'>{movie.title}</h5>
               <p className='card-text'>{movie.overview}</p>
               <div className='d-flex justify-content-between'>
                 <button
@@ -23,7 +23,7 @@ function MovieList(props) {
                   Delete
                 </button>
                 <h3>
-                  <span className='badge bg-info'>{movie.rating}</span>
+                  <span className='badge bg-info'>{movie.vote_average}</span>
                 </h3>
               </div>
             </div>
