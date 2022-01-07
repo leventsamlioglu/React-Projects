@@ -3,8 +3,13 @@ import SearchBar from "./components/SearchBar";
 import MovieList from "./components/MovieList";
 import axios from "axios";
 require("dotenv").config();
-console.log(process.env.REACT_APP_API_KEY);
 class App extends React.Component {
+  API = {
+    key: process.env.REACT_APP_API_KEY,
+    session: process.env.REACT_APP_SESSION_ID,
+    list: process.env.REACT_APP_LIST,
+  };
+
   state = {
     movies: [],
     searchText: "",
@@ -28,15 +33,16 @@ class App extends React.Component {
 
   // AXIOS API
   async componentDidMount() {
-    const KEY = process.env.REACT_APP_API_KEY;
-    const basURL = `https://api.themoviedb.org/3/movie/popular?api_key=${KEY}&language=en-US&page=1`;
-    const response = await axios.get(basURL);
-    this.setState({ movies: response.data.results });
+    // const basURL = `https://api.themoviedb.org/3/movie/popular?api_key=${this.API.key}&language=en-US&page=1`;
+
+    const baseURL = `https://api.themoviedb.org/3/list/${this.API.list}?api_key=${this.API.key}&language=en-US`;
+    const response = await axios.get(baseURL);
+    this.setState({ movies: response.data.items });
   }
 
   deleteMovie = async (movie) => {
-    const basURL = `http://localhost:3001/movies/${movie.id}`;
-    await axios.delete(basURL);
+    const baseURL = `https://api.themoviedb.org/3/list/${this.API.list}/remove_item?media_id=${movie.id}&session_id=${this.API.session}&api_key=${this.API.key}`;
+    await axios.post(baseURL);
     const newMovieList = this.state.movies.filter((m) => m.id !== movie.id);
 
     this.setState((state) => ({ movies: newMovieList }));
@@ -55,8 +61,8 @@ class App extends React.Component {
       );
     });
     return (
-      <div className='container mt-4'>
-        <div className='row'>
+      <div className='container mt-2'>
+        <div className='row' style={{ height: "50px" }}>
           <div className='col-lg-12'>
             <SearchBar search={this.searchMovie} />
           </div>

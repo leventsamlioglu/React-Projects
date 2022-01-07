@@ -4,7 +4,7 @@ function MovieList(props) {
   return (
     <div className='row'>
       {props.movies.map((movie) => (
-        <div className='col-lg-4' key={movie.id}>
+        <div className='col-lg-3' key={movie.id}>
           <div className='card mb-4 shadow-sm'>
             <img
               src={`https://www.themoviedb.org/t/p/w1280/${movie.poster_path}`}
@@ -13,7 +13,12 @@ function MovieList(props) {
             />
             <div className='card-body'>
               <h5 className='card-title'>{movie.title}</h5>
-              <p className='card-text'>{movie.overview}</p>
+              <p
+                className='card-text'
+                style={{ height: "120px", overflow: "scroll" }}
+              >
+                {movie.overview}
+              </p>
               <div className='d-flex justify-content-between'>
                 <button
                   type='button'
